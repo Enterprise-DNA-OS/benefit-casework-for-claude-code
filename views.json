@@ -1,13 +1,39 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Benefit Casework for Claude Code: what needs attention, rendered by npm run view",
+    "title": "This week in benefit casework",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Cases needing attention",
+        "sql": "select * from v_attention order by due,code,finding"
+      },
+      {
+        "title": "Decision queue",
+        "sql": "select code,owner,due_on,decision_state,evidence_gaps from v_casework where status='open' order by due_on"
+      }
+    ]
+  },
+  {
+    "name": "evidence",
+    "title": "Evidence review",
+    "sections": [
+      {
+        "title": "Requirements and evidence currency",
+        "sql": "select code,name,policy_reference,due_on,finding,checked_on,expires_on from v_evidence order by code,name"
+      }
+    ]
+  },
+  {
+    "name": "recertifications",
+    "title": "Recertification and appeals",
+    "sections": [
+      {
+        "title": "Next 30 days",
+        "sql": "select code,owner,recertify_on,decision_state from v_casework where status='open' and recertify_on<=current_date+30 order by recertify_on"
+      },
+      {
+        "title": "Open appeals",
+        "sql": "select a.code,p.owner,p.due_on,p.reason from appeals p join applications a on a.id=p.application_id where p.status='open' order by p.due_on"
       }
     ]
   }

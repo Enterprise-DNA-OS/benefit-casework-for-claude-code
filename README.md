@@ -1,115 +1,119 @@
-<h1 align="center">Benefit Casework for Claude Code</h1>
+# Benefit Casework for Claude Code
 
-<p align="center">
-  <strong>The open-source benefit casework system that is just a database and Claude Code.</strong>
-</p>
+Know which applications need evidence, which decisions are stale and which appeals need a reviewer.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free, MIT. Install the database and command recipes. | Your programme policies, fields, review dates and agreed Salesforce records brought across. [Get your version built](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management). | Installed, connected and operated through Omni by Enterprise DNA. One setup fee, then a retainer. [Book a call](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management). |
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Salesforce Benefit Management data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/salesforce-benefit-management?utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management">How it works</a></td>
-  </tr>
-</table>
+For small teams administering benefit casework. Keep applications, evidence requirements, human decision records, recertifications and appeals together. The database is the product. Claude Code, Codex, OpenCode or Cursor is the door. AGENTS.md carries the shared operating instructions.
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-salesforce-benefit-management">Instead of Salesforce Benefit Management</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Benefit Casework for Claude Code does the job you pay Salesforce Benefit Management for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Salesforce Benefit Management dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Salesforce Benefit Management per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
+Salesforce lists Public Sector Service Core at US$275 per user per month, billed annually. Ten seats imply US$33,000 a year at list price. This is a scenario, not a confirmed NZ/AU customer invoice or a quote for a complete deployment. [Research and scope](docs/research.md).
 
 ## Quick start
-
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
 
 ```bash
 git clone https://github.com/Enterprise-DNA-OS/benefit-casework-for-claude-code.git
 cd benefit-casework-for-claude-code
 npm install
 npm run demo
+npm run casework -- attention
+npm run view
+npm run docs
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Node 20+. PGlite stores the fictional demonstration in .data/db. For working records, use a separate DATA_DIR, run migrate and import without seed. DATABASE_URL selects PostgreSQL 15+. Configure trusted operator access and test backups before shared use. This is not an applicant portal.
 
-### Use it with your own Postgres or Supabase
+## The weekly work
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
-
-## The commands
-
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
-
-| Command | What it does |
+| Recipe | Result |
 |---|---|
-| `/...` | ... |
+| /programmes | Read programme policies |
+| /applications | Read the application register |
+| /evidence-due | Find missing, rejected and expired evidence |
+| /decision-queue | Prepare cases for a human decision |
+| /recertifications | Review recertifications due within 30 days |
+| /appeals | Read open and resolved appeals |
+| /owner-load | Balance case ownership and overdue reviews |
+| /attention | Read the work needing attention |
+| /compliance | Check evidence accuracy and retention review prompts |
+| /activity | Read the change history |
+| /help | List accepted commands and options |
+| /list | Read all records in one collection |
+| /show | Read a complete named record |
+| /add-programme | Register a programme and its approved policy |
+| /add | Record an application received outside this system |
+| /update | Correct case details and invalidate earlier review |
+| /require-evidence | Add a requirement from the programme policy |
+| /record-evidence | Record a person checking evidence |
+| /record-decision | Record the authorised reviewer decision |
+| /open-appeal | Record a request to review a particular decision |
+| /resolve-appeal | Record an independent appeal review |
+| /log | Record a contact or case note |
+| /import | Bring an exported application report across |
+| /export | Write a complete JSON snapshot |
+| /weekly-review | Prepare the weekly casework review |
+| /draft-request | Draft an evidence request for internal review |
+| /draft-decision | Draft a current decision record for internal review |
 
-## Instead of Salesforce Benefit Management
+/customise changes fields and local rules through a tested migration. /new-view adds a read-only report. npm run docs produces case review briefs, decision records and appeal briefs. npm run view renders the week, evidence and recertification reports with your brand.json. Print the HTML to PDF when you need a document.
 
-<!-- TODO(author): how to bring data across from Salesforce Benefit Management; link docs/replace-salesforce-benefit-management.md -->
+All 27 CLI commands support --json. Options use --key=value. Read help for accepted fields. Name matching is case-insensitive. Partial IDs work, and ambiguous matches list candidates and exit with an error. Writes require --actor. The actor name is not authenticated identity.
 
-## Architecture
+## Evidence and human decisions
 
+A programme has a policy reference. Each application has a checklist chosen from that policy. Evidence carries the reference, checker, review date, expiry and accepted or rejected result. A final decision needs current accepted evidence for every requirement, a current retention review date and a reviewer different from the case owner. An information request can be recorded before evidence is complete.
+
+Changing the application facts, requirements or evidence advances its revision. Earlier decisions become stale. Evidence expiry is checked at read time. An open appeal blocks a replacement decision until a different reviewer records its resolution. Decisions and activity are append-only through the database's normal write path. An administrator can alter the database and is not constrained by this history mechanism.
+
+The authorised person supplies every outcome and reason. The software checks record completeness. It does not determine statutory entitlement, award a benefit, execute payments or send notices. Programme policy and review dates must come from the responsible organisation. The demo programme is fictional. [Compliance sources and exact scope](docs/compliance.md).
+
+## Ten questions to ask
+
+These are checks the CLI answers now. They are not claims that Salesforce cannot be configured to produce similar reports.
+
+1. Which overdue applications also have evidence gaps? Use /applications.
+2. Which evidence references have expired? Use /evidence-due.
+3. Which earlier decisions no longer cover the current facts? Use /applications.
+4. Which applications have no evidence checklist at all? Use /compliance.
+5. Which recertifications fall due in the next 30 days? Use /recertifications.
+6. Which appeal deadlines have passed and who owns them? Use /attention.
+7. Which case owner has the largest overdue queue? Use /owner-load.
+8. Which records need a retention-purpose review? Use /compliance.
+9. What did each reviewer record and when? Use /activity.
+10. Which decisions are under appeal or awaiting more information? Use /applications.
+
+## Your first hour: ten things to ask for
+
+1. Set our business name and colours in brand.json.
+2. Show the overdue applications and their owners.
+3. Explain which household evidence is missing.
+4. Find decisions based on older facts.
+5. Show recertifications due in the next 30 days.
+6. Draft an evidence request for APP-101.
+7. Render the appeal review brief for APP-103.
+8. Preview our Salesforce application report import.
+9. Add our programme region through /customise.
+10. Add a report grouping overdue work by region through /new-view.
+
+## Bring the application register across
+
+First add your programme and policy with /add-programme. Export a Salesforce Individual Applications report as Details Only CSV in UTF-8, with the columns described in the [switching guide](docs/replace-salesforce-benefit-management.md).
+
+```bash
+npm run casework -- import salesforce --file=imports/applications.csv --source=our-deployment --programme=OUR-PROGRAMME --owner="Migration owner" --due-on=2026-12-01 --retention-on=2027-11-01 --actor="Migration owner" --dry-run
 ```
-benefit-casework-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
-```
 
-## Built for coding agents
+Choose review dates from your policy. Remove --dry-run to import. --map=fixtures/field-map.json maps customised headers. Source statuses are retained as history, including Approved, but never create a local decision. Repeated identical rows leave local edits alone. Changed source rows update imported fields and invalidate earlier review. Applications match on deployment name and source ID. A bad row or late conflict rolls back the entire file.
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+This imports application records, not payment history, household members, attachments or configured decision rules. Map those separately before retiring a source system. The complete export contains all eight record collections as JSON. CSV exports protect spreadsheet formula cells and are for review, not exact restore. [Why no front end](docs/why-no-front-end.md).
 
-## Contributing
+## Tests
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+npm test creates a temporary database, migrates, seeds twice, exercises every CLI command and checks stale decisions, evidence expiry, independent reviewers, appeal controls, atomic imports, exports and HTML escaping. The manual workflow defines Node 20 and 22 on Windows and Linux plus PostgreSQL 17. TEST_DATABASE_URL must be an empty disposable database. Working DATABASE_URL is ignored by the test.
 
-## Want it installed and run for you?
+## Make it yours
 
-Enterprise DNA installs Benefit Casework for Claude Code for your business, migrates your Salesforce Benefit Management data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+Enterprise DNA builds your agreed intake screens, connections, programme-specific rules or a different stack into your version. Omni by Enterprise DNA installs and runs it for one setup fee, then a retainer. Hosting and coding-agent usage have separate costs. [Spend 30 minutes with Sam](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management).
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management)
-- Read more: [enterprisedna.co/omni/instead-of/salesforce-benefit-management](https://enterprisedna.co/omni/instead-of/salesforce-benefit-management?utm_source=github&utm_medium=readme&utm_campaign=salesforce-benefit-management)
-
-## License
-
-MIT. Copyright (c) 2026 Enterprise DNA.
+MIT. Not affiliated with Salesforce or Anthropic.

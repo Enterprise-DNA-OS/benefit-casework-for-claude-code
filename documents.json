@@ -1,11 +1,104 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "case-review",
+    "title": "Case review brief",
+    "for_each": "select id,code from applications order by code",
+    "file": "code",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Application",
+        "layout": "record",
+        "sql": "select * from v_casework where id=$1",
+        "columns": [
+          "code",
+          "name",
+          "programme",
+          "owner",
+          "subject_ref",
+          "status",
+          "last_decision",
+          "decision_state",
+          "due_on",
+          "recertify_on"
+        ],
+        "note": "Internal review copy. Records a human process; never authorises a benefit or payment."
+      },
+      {
+        "title": "Review evidence",
+        "sql": "select name,policy_reference,due_on,reference,finding,checked_by,expires_on from v_evidence where application_id=$1 order by name"
+      },
+      {
+        "title": "Recent activity",
+        "sql": "select actor,action,note,created_at from activity where application_id=$1 order by sequence desc limit 20"
+      }
+    ]
+  },
+  {
+    "name": "decision-record",
+    "title": "Decision record",
+    "for_each": "select id,code from applications order by code",
+    "file": "code",
+    "sections": [
+      {
+        "title": "Application",
+        "layout": "record",
+        "sql": "select * from v_casework where id=$1",
+        "columns": [
+          "code",
+          "name",
+          "programme",
+          "owner",
+          "subject_ref",
+          "status",
+          "last_decision",
+          "decision_state",
+          "due_on",
+          "recertify_on"
+        ],
+        "note": "Internal review copy. Records a human process; never authorises a benefit or payment."
+      },
+      {
+        "title": "Recorded human decisions",
+        "sql": "select revision,outcome,reason,policy_reference,evidence_reference,reviewer,created_at from decisions where application_id=$1 order by revision desc"
+      },
+      {
+        "title": "Recent activity",
+        "sql": "select actor,action,note,created_at from activity where application_id=$1 order by sequence desc limit 20"
+      }
+    ]
+  },
+  {
+    "name": "appeal-review",
+    "title": "Appeal review brief",
+    "for_each": "select id,code from applications order by code",
+    "file": "code",
+    "sections": [
+      {
+        "title": "Application",
+        "layout": "record",
+        "sql": "select * from v_casework where id=$1",
+        "columns": [
+          "code",
+          "name",
+          "programme",
+          "owner",
+          "subject_ref",
+          "status",
+          "last_decision",
+          "decision_state",
+          "due_on",
+          "recertify_on"
+        ],
+        "note": "Internal review copy. Records a human process; never authorises a benefit or payment."
+      },
+      {
+        "title": "Appeal history",
+        "sql": "select reason,owner,due_on,status,resolution,evidence_reference,resolved_by from appeals where application_id=$1 order by created_at"
+      },
+      {
+        "title": "Recent activity",
+        "sql": "select actor,action,note,created_at from activity where application_id=$1 order by sequence desc limit 20"
+      }
     ]
   }
 ]

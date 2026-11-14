@@ -1,5 +1,3 @@
-# Slash commands
+# Casework commands
 
-One file per recurring job. Each command tells Claude Code exactly which CLI command to run and how to present the result, so the operator never re-explains the job.
-
-Add a command every time the same ask comes twice. Frontmatter needs a `description:` line. The body is the brief.
+Read CLAUDE.md for the route table. Each recipe wraps the one casework CLI. customise and new-view extend the database and reports after testing. No command sends, pays, publishes or decides eligibility for a person.

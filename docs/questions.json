@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Which overdue applications also have evidence gaps?",
+    "command": "applications"
+  },
+  {
+    "question": "Which evidence references have expired?",
+    "command": "evidence-due"
+  },
+  {
+    "question": "Which earlier decisions no longer cover the current facts?",
+    "command": "applications"
+  },
+  {
+    "question": "Which applications have no evidence checklist at all?",
+    "command": "compliance"
+  },
+  {
+    "question": "Which recertifications fall due in the next 30 days?",
+    "command": "recertifications"
+  },
+  {
+    "question": "Which appeal deadlines have passed and who owns them?",
+    "command": "attention"
+  },
+  {
+    "question": "Which case owner has the largest overdue queue?",
+    "command": "owner-load"
+  },
+  {
+    "question": "Which records need a retention-purpose review?",
+    "command": "compliance"
+  },
+  {
+    "question": "What did each reviewer record and when?",
+    "command": "activity"
+  },
+  {
+    "question": "Which decisions are under appeal or awaiting more information?",
+    "command": "applications"
+  }
+]
