@@ -8,7 +8,7 @@
         "sql": "select * from v_attention order by due,code,finding"
       },
       {
-        "title": "Decision queue",
+        "title": "Open applications",
         "sql": "select code,owner,due_on,decision_state,evidence_gaps from v_casework where status='open' order by due_on"
       }
     ]
